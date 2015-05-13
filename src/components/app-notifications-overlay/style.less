@@ -1,0 +1,25 @@
+.app-notifications-overlay {
+    position: fixed;
+    width: 400px;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.app-notifications-overlay .container {
+    background-color: #fde073;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 0px 6px 22px 0px rgba(0,0,0,0.75);
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-duration: .25s;
+    transition-timing-function: ease-out;
+    padding-bottom: 1em;
+}
+
+.app-notifications-overlay.visible .container {
+    visibility: visible;
+    opacity: 1;
+}

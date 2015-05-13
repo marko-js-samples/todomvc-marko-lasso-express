@@ -1,0 +1,12 @@
+<div w-bind>
+
+	<app-header/>
+	<app-main
+		todos="data.todos"/>
+
+    <app-footer
+		remaining-count="data.remainingCount"
+		completed-count="data.completedCount"
+		filter="${data.filter}"/>
+
+</div>

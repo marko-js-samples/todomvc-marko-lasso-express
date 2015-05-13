@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./service-helper.js": "./service-helper-browser.js"
+    }
+}

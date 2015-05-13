@@ -1,0 +1,10 @@
+{
+    "dependencies": [
+        "require: jquery",
+        "require: marko-widgets",
+        "todomvc-common/base.css",
+        "todomvc-app-css/index.css",
+        "src/components/app/browser.json",
+        "src/components/app-notifications-overlay/browser.json"
+    ]
+}

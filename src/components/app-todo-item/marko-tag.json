@@ -1,0 +1,5 @@
+{
+    "@todo-data": "expression",
+    "@is-editing": "boolean",
+    "@editing-title": "string"
+}

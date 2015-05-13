@@ -1,0 +1,32 @@
+<lasso-page package-path="./browser.json"/>
+
+<html html-doctype="html" lang="en" data-framework="marko">
+	<head>
+		<meta charset="utf-8">
+		<title>Marko • TodoMVC</title>
+		<lasso-head/>
+	</head>
+	<body>
+		<async-fragment data-provider="data.todoStateProvider" var="appState">
+			<section id="todoapp">
+				<app state="appState"/>
+			</section>
+		</async-fragment>
+
+		<app-notifications-overlay/>
+
+		<footer id="info">
+			<p>Double-click to edit a todo</p>
+			<p>
+				Created by
+				<a href="http://github.com/patrick-steele-idem/">Patrick Steele-Idem</a> and
+				<a href="https://github.com/philidem/">Phil Gates-Idem</a>
+			</p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+
+		<lasso-body/>
+		<init-widgets/>
+		<browser-refresh/>
+	</body>
+</html>

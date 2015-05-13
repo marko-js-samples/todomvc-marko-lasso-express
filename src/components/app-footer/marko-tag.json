@@ -1,0 +1,5 @@
+{
+    "@remaining-count": "integer",
+    "@completed-count": "integer",
+    "@filter": "string"
+}
