@@ -11,6 +11,15 @@ This variation of the TodoMVC sample app illustrates a new web application archi
 
 For this application we introduce the _State App View_ (SAV) architectural design pattern to create an application that is easier to maintain and test.
 
+# Get Started
+
+```bash
+git clone https://github.com/raptorjs-samples/todomvc-marko.git
+cd todomvc-marko
+npm install
+node server.js
+```
+
 # The SAV Architecture
 
 The SAV architecture puts emphasis on separating out _application logic_ and _application state_ from the _view_. In addition, the SAV architecture describes how _client-side widgets_ interact with the _application_ to change _application state_. The following diagram illustrates the SAV architecture:
