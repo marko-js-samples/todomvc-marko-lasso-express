@@ -13,17 +13,17 @@ For this application we introduce the _State App View_ (SAV) architectural desig
 
 # The SAV Architecture
 
-The SAV architecture puts emphasis on separating out _application logic_ and _application state_ from the _view_. In addition, the SAV architecture describes how _client-side widgets_ interact the _application_ to change _application state_. The following diagram illustrates the SAV architecture:
+The SAV architecture puts emphasis on separating out _application logic_ and _application state_ from the _view_. In addition, the SAV architecture describes how _client-side widgets_ interact with the _application_ to change _application state_. The following diagram illustrates the SAV architecture:
 
 ![SAV Architecture Diagram](./docs/sav-achitecture-diagram.png)
 
 The following are characteristics of an application that adopts the SAV architecture:
 
+- An application's view is a pure function of application state
 - Application logic and state is completely independent of the view
 - Apps are usually singletons (only one instance of the app will be created)
 - App instances manage and hold a reference to their application state
 - Widgets interact directly with app instances
-- A view is a pure function of application state (changing the application state results in a new view)
 
 # Project Struture
 
