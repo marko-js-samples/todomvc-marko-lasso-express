@@ -34,7 +34,7 @@ The following are characteristics of an application that adopts the SAV architec
 - App instances manage and hold a reference to their application state
 - Widgets interact directly with app instances
 
-# Project Struture
+# Project Structure
 
 ## src/app
 
