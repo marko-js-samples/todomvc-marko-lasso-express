@@ -54,7 +54,9 @@ exports.createService = function(routes, handlers) {
                     handlerFunc(args, function(err, data) {
                         if (err) {
                             console.error(module.id, err);
-                            res.status(500).send('Server error');
+                            res.status(500).send({
+                                error: 'Server error'
+                            });
                             return;
                         }
 

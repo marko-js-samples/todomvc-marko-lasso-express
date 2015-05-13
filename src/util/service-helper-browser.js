@@ -93,7 +93,9 @@ exports.createService = function(routes) {
                     }
 
                     if (response.statusCode !== 200) {
-                        return callback(new Error('Response not OK for ' + url + ' (' + methodName + '). Status code: ' + response.statusCode));
+                        var errorMessage = 'Response not OK for ' + method + ' ' + url + ' (' + methodName + '). Status code: ' + response.statusCode;
+                        console.error(errorMessage);
+                        return callback(new Error(errorMessage));
                     }
 
                     // Introduce an artificial delay for illustration purposes only

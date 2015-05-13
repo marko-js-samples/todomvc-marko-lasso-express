@@ -4,6 +4,20 @@ var todoService = require('src/services/todo');
 var TodoCollection = require('./TodoCollection');
 var notificationsApp = require('src/app/notifications');
 
+/**
+ * This is the "class" definition for our Todo app. On the client-side
+ * we create a single instance of this class and use it as the default
+ * exports for the "src/app/todo.js" module. The TodoApp instances
+ * expose methods can be used to modify the internal application state.
+ * When the internal state is changed, a "change" event is emitted
+ * along with the new state.
+ *
+ * The TodoApp constructor should be provided with an object with the
+ * initial state. The provided state object is wrapped and normalized
+ * by the TodoAppState module.
+ *
+ * @param {Object} state The initial state for the todo app.
+ */
 function TodoApp(state) {
     var self = this;
 
@@ -16,21 +30,39 @@ function TodoApp(state) {
 
     this._emitChangeEvent = emitChangeEvent;
 
+    // When the internal state changes also emit a change event on
+    // the app and pass along the updated state.
     this.state.on('change', emitChangeEvent);
 }
 
 TodoApp.prototype = {
 
-
+    /**
+     * Changes the active filter for the todos.
+     *
+     * @param {String} filter The filter (either "all", "active" or "completed")
+     */
     setFilter: function(filter) {
         this.state.set('filter', filter);
     },
 
-    _updateTodoItem: function(todo) {
-        var self = this;
-        var todoCollection = this.state.todoCollection;
+    _rebuildTodoCollection: function(todos) {
+        if (!todos) {
+            todos = this.state.todoCollection.getAllTodos();
+        }
+        this.state.set('todoCollection', new TodoCollection(todos));
+    },
 
-        this.state.set('todoCollection', new TodoCollection(todoCollection.getAllTodos()));
+    /**
+     * Private method for committing the changes to a todo item by
+     * making a service call to the backend.
+     *
+     * @param {Object} todo The todo item to update on the backend
+     */
+    _updateTodo: function(todo) {
+        var self = this;
+
+        this._rebuildTodoCollection();
 
         var todoId = todo.id;
 
@@ -42,7 +74,7 @@ TodoApp.prototype = {
                 },
                 function(err) {
                     if (err) {
-                        return done('Unable to mark todo as completed. It is recommended to reload the page.');
+                        return done('Unable to save todo: ' + todo.title);
                     }
 
                     self.addNotification({
@@ -73,9 +105,9 @@ TodoApp.prototype = {
             return completed === false;
         });
 
-        state.set('todoCollection', new TodoCollection(todos));
-
         if (todoIdsToDestroy.length) {
+            this._rebuildTodoCollection(todos);
+
             notificationsApp.startAsyncAction(function(done) {
                 todoService.deleteTodos(
                     {
@@ -83,7 +115,7 @@ TodoApp.prototype = {
                     },
                     function(err) {
                         if (err) {
-                            return done('Unable to remove completed todo todos. It is recommended to reload the page.');
+                            return done('Unable to remove completed todos. It is recommended to reload the page.');
                         }
 
                         done();
@@ -101,23 +133,24 @@ TodoApp.prototype = {
             var todo = todoCollection.getTodo(todoId);
             if (todo) {
                 todo.completed = completed;
-                self._updateTodoItem(todo);
+                self._updateTodo(todo);
             }
         });
     },
 
     removeTodo: function(todoId) {
         var state = this.state;
+        var self = this;
 
         this.initialServerSync().then(function() {
             var todos = state.todoCollection.getAllTodos();
 
-            // Let's filter out the todo todo in our client-side state...
+            // Let's filter out the todo in our client-side state...
             todos = todos.filter(function(todoItem) {
                 return todoItem.id !== todoId;
             });
 
-            state.set('todoCollection', new TodoCollection(todos));
+            self._rebuildTodoCollection(todos);
 
             notificationsApp.startAsyncAction(function(done) {
                 todoService.deleteTodo(
@@ -126,7 +159,7 @@ TodoApp.prototype = {
                     },
                     function(err) {
                         if (err) {
-                            return done('Unable to remove todo todo. It is recommended to reload the page.');
+                            return done('Unable to remove todo. It is recommended to reload the page.');
                         }
 
                         done();
@@ -136,6 +169,7 @@ TodoApp.prototype = {
     },
 
     toggleAllTodosCompleted: function(completed) {
+        var self = this;
         var state = this.state;
 
         this.initialServerSync().then(function() {
@@ -151,7 +185,7 @@ TodoApp.prototype = {
             });
 
             if (modifiedTodoIds.length) {
-                state.set('todoCollection', new TodoCollection(todos));
+                self._rebuildTodoCollection(todos);
 
                 notificationsApp.startAsyncAction(function(done) {
                     todoService.toggleTodosCompleted(
@@ -161,7 +195,7 @@ TodoApp.prototype = {
                         },
                         function(err) {
                             if (err) {
-                                return done('Unable to update todo todos. It is recommended to reload the page.');
+                                return done('Unable to update todos. It is recommended to reload the page.');
                             }
 
                             done();
@@ -175,10 +209,8 @@ TodoApp.prototype = {
         var self = this;
         var state = this.state;
 
-
-
         this.initialServerSync().then(function() {
-            // Add the pending todo todo
+            // Add the pending todo
             var pendingTodo = {
                 title: todoData.title,
                 pending: true
@@ -186,8 +218,7 @@ TodoApp.prototype = {
 
             var allTodos = state.todoCollection.getAllTodos();
             allTodos.push(pendingTodo);
-            state.set('todoCollection', new TodoCollection(allTodos));
-
+            self._rebuildTodoCollection(allTodos);
 
             notificationsApp.startAsyncAction(function(done) {
                 todoService.createTodo(
@@ -196,7 +227,7 @@ TodoApp.prototype = {
                     },
                     function(err, newTodo) {
                         if (err) {
-                            return done('Unable to create todo todo. It is recommended to reload the page.');
+                            return done('Unable to create todo. It is recommended to reload the page.');
                         }
 
                         allTodos = state.todoCollection.getAllTodos();
@@ -225,9 +256,19 @@ TodoApp.prototype = {
         });
     },
 
-    setAllTodosActive: function() {
-    },
-
+    /**
+     * Enters edit mode for a todo item.
+     *
+     * Only one todo item can be in edit mode at a time. We store the
+     * ID of the todo being edited as part of the state as "editingTodoId"
+     * and we store the current text for the todo being edited as
+     * "editingTodoTitle". The view can either exit editing mode
+     * by saving the change to the todo title using the saveTodoEdit(newTitle)
+     * method or by canceling the change to the todo title usng the cancelTodoEdit()
+     * method.
+     *
+     * @param {String} todoId The ID of the todo item
+     */
     enterEditModeForTodo: function(todoId) {
         var todo = this.state.todoCollection.getTodo(todoId);
         if (!todo) {
@@ -253,10 +294,10 @@ TodoApp.prototype = {
             todo.title = newTitle;
 
             // Trigger a state change for our todo collection by creating a new TodoCollection
-            // with the updated todo todo.
-            this.state.set('todoCollection', new TodoCollection(this.state.todoCollection.getAllTodos()));
+            // with the updated todo.
+            this._rebuildTodoCollection();
 
-            this._updateTodoItem(todo);
+            this._updateTodo(todo);
         }
 
         this.cancelTodoEdit();
@@ -286,7 +327,8 @@ TodoApp.prototype = {
                     }
 
                     var todos = data.todos;
-                    // Don't trigger a change event for the initial sync
+                    // Don't trigger a change event for the initial sync by modifying
+                    // the state object without going through the set() method.
                     self.state.todoCollection = new TodoCollection(todos);
                     resolve();
                 });

@@ -6,6 +6,7 @@ function AppState(state) {
         state = {};
     }
 
+    // Normalize the state based on the state object provided
     this.todoCollection = new TodoCollection(state.todos || []);
     this.filter = state.filter || 'all';
     this.editingTodoId = state.editingTodoId || null;

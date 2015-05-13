@@ -34,7 +34,7 @@ NotificationsApp.prototype = {
             if (errorMessage) {
                 self.addNotification({
                     type: 'error',
-                    message: 'errorMessage',
+                    message: errorMessage.toString(),
                     dismissable: true
                 });
             }
