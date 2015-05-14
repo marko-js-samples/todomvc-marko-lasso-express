@@ -1,7 +1,7 @@
 var inherit = require('raptor-util/inherit');
 var TodoCollection = require('./TodoCollection');
 
-function AppState(state) {
+function TodoAppState(state) {
     if (!state) {
         state = {};
     }
@@ -13,17 +13,18 @@ function AppState(state) {
     this.editingTodoTitle = state.editingTodoTitle || null;
 }
 
-AppState.prototype = {
+TodoAppState.prototype = {
+    /**
+     * Changes one of the state properties. If the provided
+     * value is equal to the current value then nothing happens.
+     * If the provided value is different then the state property
+     * is updated and a "change" event is emitted.
+     *
+     *
+     * @param {String} name The name of the state property to change
+     * @param {Object} value The new value of the state property
+     */
     set: function(name, value) {
-        if (typeof name === 'object') {
-            var newState = name;
-            for (var k in newState) {
-                if (newState.hasOwnProperty(k)) {
-                    this.set(k, newState[k]);
-                }
-            }
-            return;
-        }
 
         var curValue = this[name];
 
@@ -37,7 +38,7 @@ AppState.prototype = {
     }
 };
 
-inherit(AppState, require('events').EventEmitter);
+// Inherit from EventEmitter
+inherit(TodoAppState, require('events').EventEmitter);
 
-module.exports = AppState;
-
+module.exports = TodoAppState;
