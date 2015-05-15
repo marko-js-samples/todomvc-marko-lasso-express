@@ -5,8 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "npm run jshint",
-    "jshint": "jshint src/"
+    "test": "npm run test-server -s && npm run jshint -s",
+    "jshint": "node_modules/.bin/jshint src/",
+    "test-server": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
+    "test-browser": "node test/mocha-phantomjs/run.js",
+    "mocha-phantomjs": "node test/mocha-phantomjs/run.js"
   },
   "repository": {
     "type": "git",
@@ -36,5 +39,10 @@
     "serve-static": "^1.6.2",
     "todomvc-app-css": "^1.0.1",
     "todomvc-common": "^1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "cheerio": "^0.19.0",
+    "mocha": "^2.2.5"
   }
 }

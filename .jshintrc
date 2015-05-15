@@ -1,6 +1,13 @@
 {
     "predef": [
-
+        "it",
+        "xit",
+        "console",
+        "describe",
+        "xdescribe",
+        "beforeEach",
+        "before",
+        "after"
     ],
 
     "globals": {
