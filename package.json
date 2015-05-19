@@ -5,11 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "npm run test-server -s && npm run jshint -s",
+    "test": "npm run test-server -s && npm run test-browser -s && npm run jshint -s",
     "jshint": "node_modules/.bin/jshint src/",
     "test-server": "node_modules/.bin/mocha --ui bdd --reporter spec ./test/server",
     "test-browser": "node test/mocha-phantomjs/run.js",
-    "mocha-phantomjs": "node test/mocha-phantomjs/run.js"
+    "mocha-phantomjs": "mocha-phantomjs ./test/mocha-phantomjs/generated/test-page.html"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "marko": "^2.0.8",
     "marko-widgets": "^4.0.1-rc6",
     "native-promise-only": "^0.7.8-a",
+    "raptor-args": "^1.0.2",
     "raptor-util": "^1.0.9",
     "serve-static": "^1.6.2",
     "todomvc-app-css": "^1.0.1",
@@ -43,6 +44,9 @@
   "devDependencies": {
     "chai": "^2.3.0",
     "cheerio": "^0.19.0",
-    "mocha": "^2.2.5"
+    "ignoring-watcher": "^1.0.5",
+    "mocha": "^2.2.5",
+    "mocha-phantomjs": "^3.5.3",
+    "phantomjs": "^1.9.16"
   }
 }

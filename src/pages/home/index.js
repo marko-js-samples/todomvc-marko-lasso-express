@@ -6,7 +6,7 @@ module.exports = function(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     template.render({
-            todoStateProvider: function(callback) {
+            todoStateProvider: function todoStateProvider(callback) {
                 todoService.readAllTodos(
                     {},
                     function(err, result) {

@@ -1,13 +1,43 @@
 var inherit = require('raptor-util/inherit');
 var TodoCollection = require('./TodoCollection');
 
+// [
+//     {
+//         title: 'Go to the grocery store',
+//         completed: false
+//     },
+//     {
+//         title: 'Ship item',
+//         completed: true
+//     },
+//     {
+//         title: 'Respond to email',
+//         completed: false
+//     }
+// ]
+
 function TodoAppState(state) {
     if (!state) {
         state = {};
     }
 
     // Normalize the state based on the state object provided
-    this.todoCollection = new TodoCollection(state.todos || []);
+    this.todoCollection = new TodoCollection(
+        [
+            {
+                title: 'Go to the grocery store',
+                completed: false
+            },
+            {
+                title: 'Ship item',
+                pending: true
+            },
+            {
+                title: 'Respond to email',
+                completed: false
+            }
+        ]
+    );
     this.filter = state.filter || 'all';
     this.editingTodoId = state.editingTodoId || null;
     this.editingTodoTitle = state.editingTodoTitle || null;

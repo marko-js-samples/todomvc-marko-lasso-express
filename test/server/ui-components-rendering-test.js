@@ -11,7 +11,7 @@ var fs = require('fs');
 
 var componentsDir = nodePath.join(__dirname, '../../src/components');
 
-describe('ui-components', function() {
+describe('ui-components-rendering', function() {
     // Now load all of the test.js files under src/components
     fs.readdirSync(componentsDir).forEach(function(dir) {
 
@@ -21,7 +21,7 @@ describe('ui-components', function() {
                 require(testsPath);
             });
         } else {
-            console.warn('WARN: Rendering tests missing for ' + componentsDir);
+            // console.warn('WARN: Rendering tests missing for ' + componentsDir);
         }
     });
 });
