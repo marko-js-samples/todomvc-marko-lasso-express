@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var appTodoItem = require('./index');
 
 describe(module.id, function() {
-    it('render a todo item that is pending', function() {
+    it('should support pending', function() {
         var widget = appTodoItem.render({
                 todoData: {
                     title: 'Test todo',
@@ -19,5 +19,19 @@ describe(module.id, function() {
         expect(titleEl.innerHTML).to.equal('Test todo');
         expect(widget.el.className).to.contain('pending');
         expect(widget.state.isPending).to.equal(true);
+    });
+
+    it('should be accessible', function() {
+        var widget = appTodoItem.render({
+                todoData: {
+                    title: 'Test todo'
+                },
+                isEditing: false,
+                editingTitle: null
+            })
+            .appendTo(document.getElementById('test'))
+            .getWidget();
+
+        return expect(widget.el).to.be.accessible();
     });
 });

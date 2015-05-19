@@ -3,15 +3,16 @@
 		<input class="toggle"
 			type="checkbox"
 			checked="${data.completed}"
+			aria-label="Toggle todo completed"
 			w-onChange="handleCheckboxChange">
 
 		<label w-onDblClick="handleLabelDblClick">
 			${data.title}
 		</label>
 
-		<button class="destroy" w-onClick="handleDestroyClick" />
+		<button class="destroy" w-onClick="handleDestroyClick" aria-label="Delete todo"/>
 	</div>
-	<input
+	<input title="Enter the new todo title"
 		type="text"
 		class="edit"
 		value="${data.editingTitle}"

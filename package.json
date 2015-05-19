@@ -42,7 +42,9 @@
     "todomvc-common": "^1.0.1"
   },
   "devDependencies": {
+    "accessibility-developer-tools": "^2.7.0",
     "chai": "^2.3.0",
+    "chai-a11y": "0.0.1",
     "cheerio": "^0.19.0",
     "ignoring-watcher": "^1.0.5",
     "mocha": "^2.2.5",

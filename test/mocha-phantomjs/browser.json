@@ -2,7 +2,8 @@
     "dependencies": [
         "mocha/mocha.js",
         "mocha/mocha.css",
-        "require-run: ./mocha-browser-setup",
+        "accessibility-developer-tools/dist/js/axs_testing.js",
+        "require-run: ./browser-setup",
         "require: marko-widgets",
         "require-run: ../../src/components/**/test-browser.js"
     ]
