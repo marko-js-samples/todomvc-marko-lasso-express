@@ -20,6 +20,7 @@ This sample app illustrates the following:
 - How to synchronize client-side state with server-side state
 - How to build a web server using Express
 - How to automatically bundle JS and CSS without a build step using [Lasso.js](https://github.com/lasso-js/lasso)
+- How to write unit tests for UI components
 
 # Get Started
 
@@ -168,26 +169,32 @@ module.exports = TodoAppState;
 When rendered on the server, the todo app view is given the application state and that includes all the data that is needed to render the todo view. The application state is constructed in the page controller using the following code:
 
 ```javascript
-todoService.readAllTodos(
-    {},
-    function(err, result) {
-        if (err) {
-            return callback(err);
-        }
+function todoStateProvider(callback) {
+    todoService.readAllTodos(
+        {},
+        function(err, result) {
+            if (err) {
+                return callback(err);
+            }
 
-        var appState = new TodoAppState({
-            todos: result.todos,
-            filter: 'all'
+            var appState = new TodoAppState({
+                todos: result.todos,
+                filter: 'all'
+            });
+
+            callback(null, appState);
         });
-
-        callback(null, appState);
-    });
+}
 ```
 
-The above code invokes the `readAllTodos(args, callback)` method that is exported by the [todo service](./src/services/todo). Once the todos are asynchronously loaded, an instance of [TodoAppState](./src/app/todo/TodoAppState.js) is created and passed to the view using the provided callback. The state object is passed to the top-level [`<app>`](./src/components/app) UI component using the following code in the [page template](./src/pages/home/template.marko):
+The above code invokes the `readAllTodos(args, callback)` method that is exported by the [todo service](./src/services/todo). Once the todos are asynchronously loaded, an instance of [TodoAppState](./src/app/todo/TodoAppState.js) is created from the array of todo items and the default "all" filter and the resulting application state object is then passed to the template using the provided callback. The state object is passed to the top-level [`<app>`](./src/components/app) UI component using the following code in the [page template](./src/pages/home/template.marko):
 
 ```xml
-<app state="appState"/>
+<async-fragment data-provider="data.todoStateProvider" var="appState">
+    <section id="todoapp">
+        <app state="appState"/>
+    </section>
+</async-fragment>
 ```
 
 The constructor for [`<app>` widget](./src/components/app/index.js) includes the following code to automatically update the todo view when the application state changes:
@@ -206,6 +213,8 @@ module.exports = require('marko-widgets').defineComponent({
         // app using the new state.
         this.subscribeTo(todoApp)
             .on('change', function(newState) {
+                // Replacing the widget state with the new application
+                // state will trigger the UI to update.
                 self.replaceState(newState);
             });
     }
@@ -215,6 +224,10 @@ module.exports = require('marko-widgets').defineComponent({
 # Project Struture
 
 ## src/app
+
+### src/app/notifications
+
+### src/app/todo
 
 ## src/components
 
