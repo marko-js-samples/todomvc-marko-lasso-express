@@ -1,4 +1,5 @@
 require('app-module-path').addPath(__dirname);
+require('marko/node-require').install();
 
 var express = require('express');
 var compression = require('compression'); // Provides gzip compression for the HTTP response

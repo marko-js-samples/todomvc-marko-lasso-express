@@ -1,5 +1,5 @@
 module.exports = require('marko-widgets').defineComponent({
-    template: require.resolve('./template.marko'),
+    template: require('./template.marko'),
     getTemplateData: function(state, input) {
         var message = input.message;
         var type = input.type || 'message';

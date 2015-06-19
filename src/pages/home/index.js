@@ -1,4 +1,4 @@
-var template = require('marko').load(require.resolve('./template.marko'));
+var template = require('./template.marko');
 var todoService = require('src/services/todo');
 var TodoAppState = require('src/app/todo/TodoAppState');
 

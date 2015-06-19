@@ -1,7 +1,7 @@
 var todoApp = require('src/app/todo');
 
 module.exports = require('marko-widgets').defineComponent({
-    template: require.resolve('./template.marko'),
+    template: require('./template.marko'),
     getInitialState: function(input) {
         // Build the normalized state based on the input data
         return {

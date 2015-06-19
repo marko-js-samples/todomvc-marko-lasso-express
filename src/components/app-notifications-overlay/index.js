@@ -2,7 +2,7 @@ var appNotification = require('src/components/app-notification');
 var notificationsApp = require('src/app/notifications');
 
 module.exports = require('marko-widgets').defineComponent({
-    template: require.resolve('./template.marko'),
+    template: require('./template.marko'),
 
     init: function() {
         var self = this;
