@@ -1,5 +1,6 @@
 require('app-module-path').addPath(__dirname);
 require('marko/node-require').install();
+require('lasso/node-require-no-op').enable('.less', '.css');
 
 var express = require('express');
 var compression = require('compression'); // Provides gzip compression for the HTTP response
