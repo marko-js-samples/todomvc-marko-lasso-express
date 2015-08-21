@@ -1,5 +1,5 @@
 // Polyfill to support native ES6 promises
-require("native-promise-only");
+window.Promise = window.Promise || require('native-promise-only');
 
 var TodoApp = require('./TodoApp');
 
