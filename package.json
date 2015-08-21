@@ -33,7 +33,7 @@
     "lasso-less": "^2.0.6",
     "lasso-marko": "^2.0.3",
     "marko": "^2.7.3",
-    "marko-widgets": "^4.2.2",
+    "marko-widgets": "^5.0.0-beta",
     "native-promise-only": "^0.7.8-a",
     "raptor-args": "^1.0.2",
     "raptor-util": "^1.0.9",
@@ -49,6 +49,6 @@
     "ignoring-watcher": "^1.0.5",
     "mocha": "^2.2.5",
     "mocha-phantomjs": "^3.5.3",
-    "phantomjs": "^1.9.16"
+    "phantomjs": "1.9.7-15"
   }
 }
