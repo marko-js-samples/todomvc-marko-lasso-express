@@ -64,8 +64,9 @@ module.exports = require('marko-widgets').defineComponent({
             .getWidget();
 
 
+
         this.subscribeTo(notificationWidget)
-            .on('destroy', function() {
+            .once('destroy', function() {
                 self.handleNotificationRemoved();
             });
 
@@ -73,7 +74,7 @@ module.exports = require('marko-widgets').defineComponent({
         // reached. We need to update the view by fading the notification out and
         // then destroying the associated DOM nodes.
         this.subscribeTo(notification)
-            .on('removed', function() {
+            .once('removed', function() {
                 notificationWidget.hide(true /* destroy after hidden */);
             });
 
