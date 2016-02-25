@@ -1,7 +1,7 @@
 <div class="app-notification{?data.visible; visible}" w-bind>
     <div class="notification-bd">
         <div class="text">
-            ${data.message}
+            <span w-body/>
             <a href="#dismiss" if="data.dismissable"
                  data-id="${data.id}"
                 w-onClick="handleDismissClick">

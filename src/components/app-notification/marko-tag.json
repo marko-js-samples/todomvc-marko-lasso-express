@@ -3,6 +3,5 @@
     "@show-spinner": "boolean",
     "@dismissable": "boolean",
     "@type": "string",
-    "@visible": "boolean",
-    "body-property": "message"
+    "@visible": "boolean"
 }
