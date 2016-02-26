@@ -1,24 +1,15 @@
-<li w-bind class="${data.liClassName}">
-	<div class="view">
-		<input class="toggle"
-			type="checkbox"
-			checked="${data.completed}"
-			aria-label="Toggle todo completed"
-			w-onChange="handleCheckboxChange">
-
-		<label w-onDblClick="handleLabelDblClick">
-			${data.title}
-		</label>
-
-		<button class="destroy" w-onClick="handleDestroyClick" aria-label="Delete todo"/>
-	</div>
-	<input title="Enter the new todo title"
-		type="text"
-		class="edit"
-		value="${data.editingTitle}"
-		w-preserve
-		w-id="titleInput"
-		w-onBlur="handleInputBlur"
-		w-onChange="handleInputChange"
-		w-onKeyDown="handleInputKeyDown">
+<li w-bind class=data.liClassName>
+    <div class="view">
+        <input class="toggle" type="checkbox" checked=data.completed
+            aria-label="Toggle todo completed" w-onChange="handleCheckboxChange"/>
+        <label w-onDblClick="handleLabelDblClick">
+            ${data.title}
+        </label>
+        <button class="destroy" w-onClick="handleDestroyClick"
+            aria-label="Delete todo"/>
+    </div>
+    <input title="Enter the new todo title" type="text" class="edit"
+        value=data.editingTitle w-preserve w-id="titleInput"
+        w-onBlur="handleInputBlur" w-onChange="handleInputChange"
+        w-onKeyDown="handleInputKeyDown"/>
 </li>

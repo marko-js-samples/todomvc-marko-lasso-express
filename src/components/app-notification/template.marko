@@ -1,13 +1,14 @@
-<div class="app-notification{?data.visible; visible}" w-bind>
+<div class="app-notification${(data.visible ? ' visible' : '')}" w-bind>
     <div class="notification-bd">
         <div class="text">
             <span w-body/>
-            <a href="#dismiss" if="data.dismissable"
-                 data-id="${data.id}"
+            <a href="#dismiss" if(data.dismissable) data-id=data.id
                 w-onClick="handleDismissClick">
+
                 <span class="close-icon"/>
+
             </a>
         </div>
-        <div class="spinner" if="data.showSpinner"/>
+        <div class="spinner" if(data.showSpinner)/>
     </div>
 </div>

@@ -1,16 +1,12 @@
 <section id="main" w-bind>
-	<input id="toggle-all"
-		type="checkbox"
-		checked="${data.toggleAllChecked}"
-		w-onChange="handleToggleAllOnChange">
-
-	<label for="toggle-all">Mark all as complete</label>
-
-	<ul id="todo-list">
-		<app-todo-item for="todo in data.todos"
-			todo-data="todo.todoData"
-			is-editing="todo.isEditing"
-			editing-title="${todo.editingTitle}"
-			w-id="todo-${todo.todoData.id}"/>
-	</ul>
+    <input id="toggle-all" type="checkbox" checked=data.toggleAllChecked
+        w-onChange="handleToggleAllOnChange"/>
+    <label for="toggle-all">
+        Mark all as complete
+    </label>
+    <ul id="todo-list">
+        <app-todo-item for(todo in data.todos) todo-data=todo.todoData
+            is-editing=todo.isEditing editing-title=todo.editingTitle
+            w-id="todo-${todo.todoData.id}"/>
+    </ul>
 </section>
