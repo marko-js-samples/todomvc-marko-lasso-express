@@ -1,0 +1,26 @@
+import todoApp from '~/src/app/todo';
+
+class {
+    handleFormSubmit(event) {
+        var titleInput = document.getElementById('new-todo');
+
+        var todoTitle = titleInput.value;
+        todoApp.addNewTodo({
+            title: todoTitle
+        });
+
+        titleInput.value = '';
+
+        event.preventDefault();
+    }
+}
+
+
+<header id="header">
+    <h1>
+        todos
+    </h1>
+    <form on-submit('handleFormSubmit')>
+        <input id="new-todo" placeholder="What needs to be done?"/>
+    </form>
+</header>

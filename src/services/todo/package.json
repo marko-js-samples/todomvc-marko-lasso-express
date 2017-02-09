@@ -1,5 +1,0 @@
-{
-    "browser": {
-        "./handlers.js": "./handlers-browser.js"
-    }
-}

@@ -1,7 +1,0 @@
-{
-    "@message": "string",
-    "@show-spinner": "boolean",
-    "@dismissable": "boolean",
-    "@type": "string",
-    "@visible": "boolean"
-}

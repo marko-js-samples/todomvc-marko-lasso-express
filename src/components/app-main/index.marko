@@ -1,0 +1,39 @@
+import todoApp from '~/src/app/todo';
+
+static function isToggleAllChecked(todos) {
+    var toggleAllChecked = true;
+
+    for (var i=0; i<todos.length; i++) {
+        var todo = todos[i];
+        if (!todo.completed) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+class {
+    handleToggleAllOnChange(event, input) {
+        todoApp.toggleAllTodosCompleted(input.checked);
+    }
+}
+
+<section id="main">
+
+    <input id="toggle-all"
+        type="checkbox"
+        checked=isToggleAllChecked(input.todos)
+        on-change("handleToggleAllOnChange")/>
+
+    <label for="toggle-all">
+        Mark all as complete
+    </label>
+
+    <ul id="todo-list">
+        <for(todo in data.todos)>
+            <app-todo-item(todo) key="todo-${todo.id}"/>
+        </for>
+    </ul>
+
+</section>

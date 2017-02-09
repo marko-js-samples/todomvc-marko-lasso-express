@@ -1,27 +1,31 @@
 var template = require('./template.marko');
-var todoService = require('src/services/todo');
-var TodoAppState = require('src/app/todo/TodoAppState');
+var nextId = 0;
 
 module.exports = function(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    template.render({
-            todoStateProvider: function todoStateProvider(callback) {
-                todoService.readAllTodos(
-                    {},
-                    function(err, result) {
-                        if (err) {
-                            return callback(err);
-                        }
-
-                        var appState = new TodoAppState({
-                            todos: result.todos,
-                            filter: 'all'
-                        });
-
-                        callback(null, appState);
-                    });
+    var todoState = Promise.resolve({
+        todos: [
+            {
+                title: 'Learn marko',
+                completed: true,
+                id: nextId++
+            },
+            {
+                title: 'Build an awesome web app',
+                completed: false,
+                id: nextId++
+            },
+            {
+                title: 'Profit',
+                completed: false,
+                id: nextId++
             }
-        },
-        res);
+        ],
+        filter: 'all'
+    });
+
+    res.marko(template, {
+        todoState: todoState
+    });
 };

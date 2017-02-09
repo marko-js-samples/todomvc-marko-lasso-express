@@ -1,24 +1,9 @@
 {
     "predef": [
-        "it",
-        "xit",
-        "console",
-        "describe",
-        "xdescribe",
-        "beforeEach",
-        "before",
-        "after"
+        "document"
     ],
-
-    "globals": {
-        "require": true,
-        "Promise": true,
-        "Notification": true
-    },
-
     "node" : true,
-    "es5" : false,
-    "browser" : true,
+    "esnext": true,
     "boss" : false,
     "curly": false,
     "debug": false,
@@ -37,10 +22,10 @@
     "plusplus": false,
     "regexp": false,
     "undef": true,
-    "sub": true,
+    "sub": false,
     "white": false,
     "eqeqeq": false,
-    "latedef": true,
+    "latedef": "func",
     "unused": "vars",
     "strict": false,
     "eqnull": true

@@ -9,12 +9,13 @@
         <lasso-head/>
     </head>
     <body>
-        <async-fragment data-provider=data.todoStateProvider var="appState">
-            <section id="todoapp">
-                <app state=appState/>
-            </section>
-        </async-fragment>
-        <app-notifications-overlay/>
+        <section id="todoapp">
+            <await(appState from input.todoState)>
+                <app(appState)/>
+            </await>
+        </section>
+
+        <!-- <app-notifications-overlay/> -->
         <footer id="info">
             <p>
                 Double-click to edit a todo
@@ -37,7 +38,6 @@
             </p>
         </footer>
         <lasso-body/>
-        <init-widgets/>
         <browser-refresh/>
     </body>
 </html>
